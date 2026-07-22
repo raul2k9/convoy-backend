@@ -11,7 +11,7 @@ if (process.env.DATABASE_URL) {
   });
 } else {
   const dbPath = process.env.PGLITE_PATH || './data.db';
-  const db = new PGlite(dbPath);
+  const db = new PGlite(dbPath, { initialMemory: 128 * 1024 * 1024 });
   pool = {
     query: (text, params) => db.query(text, params),
     on: () => {},
