@@ -5,6 +5,8 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import pool from './db/pool.js';
+import { init } from './db/init.js';
+import { seed } from './db/seed.js';
 
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
@@ -158,6 +160,12 @@ io.on('connection', (socket) => {
   });
 });
 
-httpServer.listen(PORT, () => {
-  console.log(`Convoy backend running on port ${PORT}`);
-});
+async function startServer() {
+  await init();
+  await seed();
+  httpServer.listen(PORT, () => {
+    console.log(`Convoy backend running on port ${PORT}`);
+  });
+}
+
+startServer();

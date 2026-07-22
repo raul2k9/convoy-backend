@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import pool from './pool.js';
 
-async function seed() {
+export async function seed() {
   const email = process.env.ADMIN_EMAIL || 'admin@1csra.in';
   const password = process.env.ADMIN_PASSWORD || 'admin123';
   const hash = await bcrypt.hash(password, 10);
@@ -19,9 +19,5 @@ async function seed() {
     console.log('Admin user created/updated:', email);
   } catch (err) {
     console.error('Seed error:', err);
-  } finally {
-    await pool.end();
   }
 }
-
-seed();

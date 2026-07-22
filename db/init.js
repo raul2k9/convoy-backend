@@ -135,7 +135,7 @@ const statements = [
   `CREATE INDEX IF NOT EXISTS idx_audit_logs_user ON audit_logs(user_id)`
 ];
 
-async function init() {
+export async function init() {
   try {
     for (const stmt of migrationStatements) {
       await pool.query(stmt);
@@ -147,9 +147,5 @@ async function init() {
   } catch (err) {
     console.error('Database init error:', err);
     process.exitCode = 1;
-  } finally {
-    await pool.end();
   }
 }
-
-init();
